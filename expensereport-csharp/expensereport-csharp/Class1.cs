@@ -18,6 +18,11 @@ namespace expensereport_csharp
     {
         public void PrintReport(List<Expense> expenses)
         {
+            PrintReport(expenses, new DateTimeProvider());
+        }
+
+        public void PrintReport(List<Expense> expenses, DateTimeProvider timeProvider)
+        {
             int total = 0;
             int mealExpenses = 0;
 
@@ -63,5 +68,9 @@ namespace expensereport_csharp
         {
             Console.WriteLine("hello");
         }
+    }
+
+    public class DateTimeProvider
+    {
     }
 }
