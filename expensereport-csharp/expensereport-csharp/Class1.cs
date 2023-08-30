@@ -21,12 +21,12 @@ namespace expensereport_csharp
             PrintReport(expenses, new DateTimeProvider());
         }
 
-        public void PrintReport(List<Expense> expenses, DateTimeProvider timeProvider)
+        public void PrintReport(List<Expense> expenses, INowProvider timeProvider)
         {
             int total = 0;
             int mealExpenses = 0;
 
-            Console.WriteLine("Expenses " + DateTime.Now);
+            Console.WriteLine("Expenses " + timeProvider.Now);
             
             foreach (Expense expense in expenses)
             {
@@ -70,7 +70,13 @@ namespace expensereport_csharp
         }
     }
 
-    public class DateTimeProvider
+    public class DateTimeProvider: INowProvider
     {
+        public DateTime Now => DateTime.Now;
+    }
+
+    public interface INowProvider
+    {
+        DateTime Now { get; }
     }
 }

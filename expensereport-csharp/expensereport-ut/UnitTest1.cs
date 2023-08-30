@@ -18,18 +18,24 @@ namespace Tests
         public void Test2()
         {
             var expenseReport = new ExpenseReport();
+            var fakeTimeProvider = new FakeTimeProvider();
             var expenses = new List<Expense>()
             {
                 new Expense(){ amount = 1, type = ExpenseType.DINNER, },
+                new Expense(){ amount = 1, type = ExpenseType.BREAKFAST, },
+                new Expense(){ amount = 1, type = ExpenseType.CAR_RENTAL, },
             };
             using (var sw = new StringWriter()) {
                 Console.SetOut(sw);
-                expenseReport.PrintReport(expenses);
+                expenseReport.PrintReport(expenses, fakeTimeProvider);
                 var sb = new StringBuilder();
-                sb.AppendLine("Expenses NOW");
-                sb.AppendLine("Expenses NOW");
+                sb.AppendLine("Expenses " + fakeTimeProvider.Now);
+                sb.AppendLine("Dinner\t1\t ");
+                sb.AppendLine("Breakfast\t1\t ");
+                sb.AppendLine("Car Rental\t1\t ");
+                sb.AppendLine("Meal expenses: 2\r\nTotal expenses: 3");
                 
-                Assert.AreEqual($"hello{Environment.NewLine}", sw.ToString());
+                Assert.AreEqual(sb.ToString(), sw.ToString());
                 
                 //"Expenses "+ DateTime.Now
                 // expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker
@@ -48,5 +54,10 @@ namespace Tests
                 Assert.AreEqual($"hello{Environment.NewLine}", sw.ToString());
             }
         }
+    }
+    
+    public class FakeTimeProvider: INowProvider
+    {
+        public DateTime Now => DateTime.MinValue;
     }
 }
