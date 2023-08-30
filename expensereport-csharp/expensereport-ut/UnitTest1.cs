@@ -23,6 +23,8 @@ namespace Tests
             {
                 new Expense(){ Amount = 1, ExpenseType = ExpenseType.Dinner, },
                 new Expense(){ Amount = 5001, ExpenseType = ExpenseType.Dinner, },
+                new Expense(){ Amount = 1, ExpenseType = ExpenseType.Lunch, },
+                new Expense(){ Amount = 2001, ExpenseType = ExpenseType.Lunch, },
                 new Expense(){ Amount = 1, ExpenseType = ExpenseType.Breakfast, },
                 new Expense(){ Amount = 1001, ExpenseType = ExpenseType.Breakfast, },
                 new Expense(){ Amount = 1, ExpenseType = ExpenseType.CarRental, },
@@ -34,11 +36,13 @@ namespace Tests
                 sb.AppendLine("Expenses " + fakeTimeProvider.Now);
                 sb.AppendLine("Dinner\t1\t ");
                 sb.AppendLine("Dinner\t5001\tX");
+                sb.AppendLine("Lunch\t1\t ");
+                sb.AppendLine("Lunch\t2001\tX");
                 sb.AppendLine("Breakfast\t1\t ");
                 sb.AppendLine("Breakfast\t1001\tX");
                 sb.AppendLine("Car Rental\t1\t ");
-                sb.AppendLine("Meal expenses: 6004");
-                sb.AppendLine("Total expenses: 6005");
+                sb.AppendLine("Meal expenses: 8006");
+                sb.AppendLine("Total expenses: 8007");
                 
                 Assert.AreEqual(sb.ToString(), sw.ToString());
                 

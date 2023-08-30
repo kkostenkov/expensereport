@@ -7,7 +7,8 @@ namespace expensereport_csharp
     {
         Dinner, 
         Breakfast, 
-        CarRental
+        CarRental,
+        Lunch,
     }
 
     public struct Expense
@@ -22,6 +23,8 @@ namespace expensereport_csharp
                     return "Dinner";
                 case ExpenseType.Breakfast:
                     return "Breakfast";
+                case ExpenseType.Lunch:
+                    return "Lunch";
                 case ExpenseType.CarRental:
                     return "Car Rental";
             }
@@ -32,6 +35,7 @@ namespace expensereport_csharp
         {
             var mealOverExpensesMarker =
                 ExpenseType == ExpenseType.Dinner && Amount > 5000 ||
+                ExpenseType == ExpenseType.Lunch && Amount > 2000 ||
                 ExpenseType == ExpenseType.Breakfast && Amount > 1000
                     ? "X"
                     : " ";
@@ -41,6 +45,7 @@ namespace expensereport_csharp
         public bool IsMeal()
         {
             return ExpenseType == ExpenseType.Dinner ||
+                   ExpenseType == ExpenseType.Lunch ||
                    ExpenseType == ExpenseType.Breakfast;
         }
 
