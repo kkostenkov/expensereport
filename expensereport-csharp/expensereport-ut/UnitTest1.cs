@@ -22,7 +22,9 @@ namespace Tests
             var expenses = new List<Expense>()
             {
                 new Expense(){ amount = 1, type = ExpenseType.DINNER, },
+                new Expense(){ amount = 5001, type = ExpenseType.DINNER, },
                 new Expense(){ amount = 1, type = ExpenseType.BREAKFAST, },
+                new Expense(){ amount = 1001, type = ExpenseType.BREAKFAST, },
                 new Expense(){ amount = 1, type = ExpenseType.CAR_RENTAL, },
             };
             using (var sw = new StringWriter()) {
@@ -31,9 +33,12 @@ namespace Tests
                 var sb = new StringBuilder();
                 sb.AppendLine("Expenses " + fakeTimeProvider.Now);
                 sb.AppendLine("Dinner\t1\t ");
+                sb.AppendLine("Dinner\t5001\tX");
                 sb.AppendLine("Breakfast\t1\t ");
+                sb.AppendLine("Breakfast\t1001\tX");
                 sb.AppendLine("Car Rental\t1\t ");
-                sb.AppendLine("Meal expenses: 2\r\nTotal expenses: 3");
+                sb.AppendLine("Meal expenses: 6004");
+                sb.AppendLine("Total expenses: 6005");
                 
                 Assert.AreEqual(sb.ToString(), sw.ToString());
                 
