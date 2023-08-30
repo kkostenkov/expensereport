@@ -27,6 +27,27 @@ namespace expensereport_csharp
             }
             return String.Empty;
         }
+
+        public string GetMealOverExpensesMarker()
+        {
+            var mealOverExpensesMarker =
+                ExpenseType == ExpenseType.Dinner && Amount > 5000 ||
+                ExpenseType == ExpenseType.Breakfast && Amount > 1000
+                    ? "X"
+                    : " ";
+            return mealOverExpensesMarker;
+        }
+
+        public bool IsMeal()
+        {
+            return ExpenseType == ExpenseType.Dinner ||
+                   ExpenseType == ExpenseType.Breakfast;
+        }
+
+        public override string ToString()
+        {
+            return GetExpenseName() + "\t" + Amount + "\t" + GetMealOverExpensesMarker();
+        }
     }
 
     public class ExpenseReport
@@ -44,19 +65,11 @@ namespace expensereport_csharp
             Console.WriteLine("Expenses " + timeProvider.Now);
             
             foreach (Expense expense in expenses) {
-                if (expense.ExpenseType == ExpenseType.Dinner || expense.ExpenseType == ExpenseType.Breakfast) {
+                if (expense.IsMeal()) {
                     mealExpenses += expense.Amount;
                 }
-                
-                var expenseName = expense.GetExpenseName();
 
-                String mealOverExpensesMarker =
-                    expense.ExpenseType == ExpenseType.Dinner && expense.Amount > 5000 ||
-                    expense.ExpenseType == ExpenseType.Breakfast && expense.Amount > 1000
-                        ? "X"
-                        : " ";
-
-                Console.WriteLine(expenseName + "\t" + expense.Amount + "\t" + mealOverExpensesMarker);
+                Console.WriteLine(expense.ToString());
 
                 total += expense.Amount;
             }
