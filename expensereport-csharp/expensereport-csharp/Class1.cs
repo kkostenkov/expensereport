@@ -5,13 +5,28 @@ namespace expensereport_csharp
 {
     public enum ExpenseType
     {
-        DINNER, BREAKFAST, CAR_RENTAL
+        Dinner, 
+        Breakfast, 
+        CarRental
     }
 
-    public class Expense
+    public struct Expense
     {
-        public ExpenseType type;
-        public int amount;
+        public ExpenseType ExpenseType;
+        public int Amount;
+
+        public string GetExpenseName()
+        {
+            switch (ExpenseType) {
+                case ExpenseType.Dinner:
+                    return "Dinner";
+                case ExpenseType.Breakfast:
+                    return "Breakfast";
+                case ExpenseType.CarRental:
+                    return "Car Rental";
+            }
+            return String.Empty;
+        }
     }
 
     public class ExpenseReport
@@ -28,36 +43,22 @@ namespace expensereport_csharp
 
             Console.WriteLine("Expenses " + timeProvider.Now);
             
-            foreach (Expense expense in expenses)
-            {
-                if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST)
-                {
-                    mealExpenses += expense.amount;
+            foreach (Expense expense in expenses) {
+                if (expense.ExpenseType == ExpenseType.Dinner || expense.ExpenseType == ExpenseType.Breakfast) {
+                    mealExpenses += expense.Amount;
                 }
-
-                String expenseName = "";
-                switch (expense.type)
-                {
-                    case ExpenseType.DINNER:
-                        expenseName = "Dinner";
-                        break;
-                    case ExpenseType.BREAKFAST:
-                        expenseName = "Breakfast";
-                        break;
-                    case ExpenseType.CAR_RENTAL:
-                        expenseName = "Car Rental";
-                        break;
-                }
+                
+                var expenseName = expense.GetExpenseName();
 
                 String mealOverExpensesMarker =
-                    expense.type == ExpenseType.DINNER && expense.amount > 5000 ||
-                    expense.type == ExpenseType.BREAKFAST && expense.amount > 1000
+                    expense.ExpenseType == ExpenseType.Dinner && expense.Amount > 5000 ||
+                    expense.ExpenseType == ExpenseType.Breakfast && expense.Amount > 1000
                         ? "X"
                         : " ";
 
-                Console.WriteLine(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
+                Console.WriteLine(expenseName + "\t" + expense.Amount + "\t" + mealOverExpensesMarker);
 
-                total += expense.amount;
+                total += expense.Amount;
             }
 
             Console.WriteLine("Meal expenses: " + mealExpenses);

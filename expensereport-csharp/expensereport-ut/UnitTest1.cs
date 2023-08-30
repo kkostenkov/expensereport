@@ -21,11 +21,11 @@ namespace Tests
             var fakeTimeProvider = new FakeTimeProvider();
             var expenses = new List<Expense>()
             {
-                new Expense(){ amount = 1, type = ExpenseType.DINNER, },
-                new Expense(){ amount = 5001, type = ExpenseType.DINNER, },
-                new Expense(){ amount = 1, type = ExpenseType.BREAKFAST, },
-                new Expense(){ amount = 1001, type = ExpenseType.BREAKFAST, },
-                new Expense(){ amount = 1, type = ExpenseType.CAR_RENTAL, },
+                new Expense(){ Amount = 1, ExpenseType = ExpenseType.Dinner, },
+                new Expense(){ Amount = 5001, ExpenseType = ExpenseType.Dinner, },
+                new Expense(){ Amount = 1, ExpenseType = ExpenseType.Breakfast, },
+                new Expense(){ Amount = 1001, ExpenseType = ExpenseType.Breakfast, },
+                new Expense(){ Amount = 1, ExpenseType = ExpenseType.CarRental, },
             };
             using (var sw = new StringWriter()) {
                 Console.SetOut(sw);
