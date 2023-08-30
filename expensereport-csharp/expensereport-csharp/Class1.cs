@@ -59,23 +59,31 @@ namespace expensereport_csharp
 
         public void PrintReport(List<Expense> expenses, INowProvider timeProvider)
         {
-            int total = 0;
-            int mealExpenses = 0;
-
             Console.WriteLine("Expenses " + timeProvider.Now);
             
+            foreach (Expense expense in expenses) {
+                Console.WriteLine(expense.ToString());
+            }
+            
+            var expenseDetails = CalculateExpenseDetails(expenses);
+
+            Console.WriteLine(expenseDetails.ToString());
+        }
+
+        private ExpenseDetails CalculateExpenseDetails(List<Expense> expenses)
+        {
+            var mealExpenses = 0;
+            var total = 0;
             foreach (Expense expense in expenses) {
                 if (expense.IsMeal()) {
                     mealExpenses += expense.Amount;
                 }
-
-                Console.WriteLine(expense.ToString());
-
                 total += expense.Amount;
             }
-
-            Console.WriteLine("Meal expenses: " + mealExpenses);
-            Console.WriteLine("Total expenses: " + total);
+            return new ExpenseDetails {
+                Total = total,
+                MealExpenses = mealExpenses
+            };
         }
 
         public void Print()
@@ -84,7 +92,7 @@ namespace expensereport_csharp
         }
     }
 
-    public class DateTimeProvider: INowProvider
+    public class DateTimeProvider : INowProvider
     {
         public DateTime Now => DateTime.Now;
     }
@@ -92,5 +100,16 @@ namespace expensereport_csharp
     public interface INowProvider
     {
         DateTime Now { get; }
+    }
+
+    public struct ExpenseDetails
+    {
+        public int Total;
+        public int MealExpenses;
+
+        public override string ToString()
+        {
+            return $"Meal expenses: {MealExpenses}{Environment.NewLine}Total expenses: {Total}"; 
+        }
     }
 }
